@@ -1,7 +1,11 @@
 var startQuizBtn = document.getElementById("start-quiz"); // target start quiz button
-var quizButtonsEl =  document.getElementById("quiz-page");
+var quizButtonsEl =  document.getElementById("quiz-answers");
 var questionText = document.getElementById("quiz-h2");
 var resultsText = document.getElementById("result");
+
+// variables to hold time left and target HTML display
+var timeLeft = 75;
+var timeLeftDisplay = document.getElementById("quiz-timer");
 
 // variable to set which question/answers are displayed
 var currentQ = 0;
@@ -52,10 +56,8 @@ const quizQuestions = [
 
 var quizTimer = function() {
 
-    // variables to hold time left and target HTML display
-    var timeLeft = 75;
-    var timeLeftDisplay = document.getElementById("quiz-timer");
     timeLeftDisplay.textContent = timeLeft;
+
     // count down from 75 seconds and update timer display, stop at 0
     setInterval ( function() {
         if (timeLeft === 0) {
@@ -118,33 +120,42 @@ var startQuiz = function () {
 var switchQuestion = function (event) {
 
     var buttonClick = event.target;
+    var lastQuestion = quizQuestions.length - 1;
     // only iterate through questions array after start quiz is clicked
-    if (buttonClick.matches("#start-quiz")) {
-        return;
-    } else {
+    if (currentQ === lastQuestion) {
+        endQuiz();
+        questionText.textContent = "You have completed the quiz.";
+        resultsText.textContent = "";
+    } else if (buttonClick) {
         currentQ++;
+        questionText.textContent = quizQuestions[currentQ].question;
+        document.getElementById("a").textContent = quizQuestions[currentQ].answers.a;
+        document.getElementById("b").textContent = quizQuestions[currentQ].answers.b;
+        document.getElementById("c").textContent = quizQuestions[currentQ].answers.c;
+        document.getElementById("d").textContent = quizQuestions[currentQ].answers.d;
     }
-
-    questionText.textContent = quizQuestions[currentQ].question;
-    document.getElementById("a").textContent = quizQuestions[currentQ].answers.a;
-    document.getElementById("b").textContent = quizQuestions[currentQ].answers.b;
-    document.getElementById("c").textContent = quizQuestions[currentQ].answers.c;
-    document.getElementById("d").textContent = quizQuestions[currentQ].answers.d;
 
 };
 
 var checkAnswer = function (event) {
 
-    var answer = event.target.getAttribute("id");
+    var buttonId = event.target.getAttribute("id");
     
-    if (answer == "start-quiz") {
-        return;
-    } else if (answer == quizQuestions[currentQ].correctAnswer) {
+    if (buttonId == quizQuestions[currentQ].correctAnswer) {
         resultsText.textContent = "Correct!";
     } else {
         resultsText.textContent = "Incorrect - time left reduced by 10 seconds";
-        //timeLeft = timeLeft - 10;
+        timeLeft = timeLeft - 10;
     }
+
+}
+
+var endQuiz = function () {
+
+    document.getElementById("a").style.display = "none";
+    document.getElementById("b").style.display = "none";
+    document.getElementById("c").style.display = "none";
+    document.getElementById("d").style.display = "none";
 
 }
 

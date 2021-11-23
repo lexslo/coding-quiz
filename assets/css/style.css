@@ -8,11 +8,24 @@ header a {
 }
 
 header p {
-    margin: 0;
+    margin: 0 auto;
 }
 
-main div {
+main {
+    width: 70%;
+    margin: 0 auto;
     text-align: center;
+}
+
+.quiz-heading {
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.quiz-answers {
+    display: block;
+    margin: 0 auto;
+    width: 50%;
 }
 
 .quiz-btn {
@@ -24,11 +37,33 @@ main div {
     background-color: #4f1ea8;
     border-radius: 5px;
     font-size: 16px;
-    left: 350px;
-    position: relative;
 }
 
 .quiz-btn:hover {
+    background-color: lavender;
+    color: black;
+}
+
+#start-quiz {
+    display: inline;
+}
+
+.hs-btn {
+    padding: 5px 10px;
+    margin: 7px;
+    border: none;
+    color: white;
+    background-color: #4f1ea8;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.hs-btn a {
+    text-decoration: none;
+    color: white;
+}
+
+.hs-btn:hover {
     background-color: lavender;
     color: black;
 }
