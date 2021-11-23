@@ -1,5 +1,5 @@
 var startQuizBtn = document.getElementById("start-quiz"); // target start quiz button
-var quizButtonsEl =  document.getElementById("quiz-answers");
+var quizContentEl =  document.getElementById("quiz-content");
 var questionText = document.getElementById("quiz-h2");
 var resultsText = document.getElementById("result");
 
@@ -82,25 +82,25 @@ var generateQuestions = function () {
     answerA.className = "quiz-btn";
     answerA.setAttribute("id", "a");
     answerA.textContent = quizQuestions[currentQ].answers.a;
-    quizButtonsEl.appendChild(answerA);
+    quizContentEl.appendChild(answerA);
 
     var answerB = document.createElement("button");
     answerB.className = "quiz-btn";
     answerB.setAttribute("id", "b");
     answerB.textContent = quizQuestions[currentQ].answers.b;
-    quizButtonsEl.appendChild(answerB);
+    quizContentEl.appendChild(answerB);
 
     var answerC = document.createElement("button");
     answerC.className = "quiz-btn";
     answerC.setAttribute("id", "c");
     answerC.textContent = quizQuestions[currentQ].answers.c;
-    quizButtonsEl.appendChild(answerC);
+    quizContentEl.appendChild(answerC);
 
     var answerD = document.createElement("button");
     answerD.className = "quiz-btn";
     answerD.setAttribute("id", "d");
     answerD.textContent = quizQuestions[currentQ].answers.d;
-    quizButtonsEl.appendChild(answerD);
+    quizContentEl.appendChild(answerD);
 
 }
 
@@ -124,8 +124,6 @@ var switchQuestion = function (event) {
     // only iterate through questions array after start quiz is clicked
     if (currentQ === lastQuestion) {
         endQuiz();
-        questionText.textContent = "You have completed the quiz.";
-        resultsText.textContent = "";
     } else if (buttonClick) {
         currentQ++;
         questionText.textContent = quizQuestions[currentQ].question;
@@ -134,7 +132,6 @@ var switchQuestion = function (event) {
         document.getElementById("c").textContent = quizQuestions[currentQ].answers.c;
         document.getElementById("d").textContent = quizQuestions[currentQ].answers.d;
     }
-
 };
 
 var checkAnswer = function (event) {
@@ -152,13 +149,26 @@ var checkAnswer = function (event) {
 
 var endQuiz = function () {
 
+    // stop the timer when the quiz has ended
+    clearInterval(quizTimer);
+    // change text at top when quiz ends
+    questionText.textContent = "You have completed the quiz.";
+    resultsText.textContent = "";
+    // hide buttons when quiz ends
     document.getElementById("a").style.display = "none";
     document.getElementById("b").style.display = "none";
     document.getElementById("c").style.display = "none";
     document.getElementById("d").style.display = "none";
+    // create input field for initials
+    var initialsInput = document.createElement("input");
+    initialsInput.setAttribute("type", "text");
+    initialsInput.setAttribute("name", "initials");
+    initialsInput.setAttribute("placeholder", "Enter Initials");
+    initialsInput.className = "initials-input";
+    quizContentEl.appendChild(initialsInput);
 
 }
 
 startQuizBtn.addEventListener('click', startQuiz);
-quizButtonsEl.addEventListener('click', checkAnswer);
-quizButtonsEl.addEventListener('click', switchQuestion);
+quizContentEl.addEventListener('click', checkAnswer);
+quizContentEl.addEventListener('click', switchQuestion);
