@@ -14,3 +14,21 @@ header p {
 main div {
     text-align: center;
 }
+
+.quiz-btn {
+    display: block;
+    padding: 5px 10px;
+    margin: 7px;
+    border: none;
+    color: white;
+    background-color: #4f1ea8;
+    border-radius: 5px;
+    font-size: 16px;
+    left: 350px;
+    position: relative;
+}
+
+.quiz-btn:hover {
+    background-color: lavender;
+    color: black;
+}
