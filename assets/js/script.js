@@ -1,6 +1,7 @@
 var startQuizBtn = document.getElementById("start-quiz"); // target start quiz button
 var quizButtonsEl =  document.getElementById("quiz-page");
 var questionText = document.getElementById("quiz-h2");
+var resultsText = document.getElementById("result");
 
 // variable to set which question/answers are displayed
 var currentQ = 0;
@@ -18,51 +19,54 @@ const quizQuestions = [
     correctAnswer: "c"
     },
     {
-        question: "Second question",
+        question: "How do we stop a loop from from repeating indefinitely?",
         answers: {
-        a: "a",
-        b: "b",
-        c: "c",
-        d: "d"
+        a: "When the condition is false.",
+        b: "When the condition is true.",
+        c: "When we have iterated through half of the condition.",
+        d: "With the break keyword."
         }, 
     correctAnswer: "b"
     },
     {
-        question: "Third question",
+        question: "As a developer, I want to be able to remove the last element of my array and I want to also be able to add a new element to the beginning of my array. Which two array methods should I use?",
         answers: {
-        a: "a",
-        b: "b",
-        c: "c",
-        d: "d"
+        a: "pop() and unshift()",
+        b: "push() and sort()",
+        c: "forEach() and pop()",
+        d: "concat() and shift()"
         }, 
-    correctAnswer: "c"
+    correctAnswer: "a"
     },
     {
-        question: "Fourth question",
+        question: "From the given array which index is the letter 'b' on? ['a', 'b', 'c', 'd']",
         answers: {
-        a: "a",
-        b: "b",
-        c: "c",
-        d: "d"
+        a: "1",
+        b: "0",
+        c: "2",
+        d: "3"
         }, 
-    correctAnswer: "d"
+    correctAnswer: "a"
     }
 ];
 
 var quizTimer = function() {
+
     // variables to hold time left and target HTML display
     var timeLeft = 75;
     var timeLeftDisplay = document.getElementById("quiz-timer");
     timeLeftDisplay.textContent = timeLeft;
     // count down from 75 seconds and update timer display, stop at 0
     setInterval ( function() {
-        if (timeLeft < 0) {
+        if (timeLeft === 0) {
             clearInterval(quizTimer);
         } else {
             timeLeft--;
             timeLeftDisplay.textContent = timeLeft;
         }
     }, 1000);
+
+    return timeLeft;
 
 };
 
@@ -74,25 +78,25 @@ var generateQuestions = function () {
     // create buttons and apply answer text to them
     var answerA = document.createElement("button");
     answerA.className = "quiz-btn";
-    answerA.setAttribute("id", "answer-a");
+    answerA.setAttribute("id", "a");
     answerA.textContent = quizQuestions[currentQ].answers.a;
     quizButtonsEl.appendChild(answerA);
 
     var answerB = document.createElement("button");
     answerB.className = "quiz-btn";
-    answerB.setAttribute("id", "answer-b");
+    answerB.setAttribute("id", "b");
     answerB.textContent = quizQuestions[currentQ].answers.b;
     quizButtonsEl.appendChild(answerB);
 
     var answerC = document.createElement("button");
     answerC.className = "quiz-btn";
-    answerC.setAttribute("id", "answer-c");
+    answerC.setAttribute("id", "c");
     answerC.textContent = quizQuestions[currentQ].answers.c;
     quizButtonsEl.appendChild(answerC);
 
     var answerD = document.createElement("button");
     answerD.className = "quiz-btn";
-    answerD.setAttribute("id", "answer-d");
+    answerD.setAttribute("id", "d");
     answerD.textContent = quizQuestions[currentQ].answers.d;
     quizButtonsEl.appendChild(answerD);
 
@@ -122,12 +126,28 @@ var switchQuestion = function (event) {
     }
 
     questionText.textContent = quizQuestions[currentQ].question;
-    document.getElementById("answer-a").textContent = quizQuestions[currentQ].answers.a;
-    document.getElementById("answer-b").textContent = quizQuestions[currentQ].answers.b;
-    document.getElementById("answer-c").textContent = quizQuestions[currentQ].answers.c;
-    document.getElementById("answer-d").textContent = quizQuestions[currentQ].answers.d;
+    document.getElementById("a").textContent = quizQuestions[currentQ].answers.a;
+    document.getElementById("b").textContent = quizQuestions[currentQ].answers.b;
+    document.getElementById("c").textContent = quizQuestions[currentQ].answers.c;
+    document.getElementById("d").textContent = quizQuestions[currentQ].answers.d;
 
 };
 
+var checkAnswer = function (event) {
+
+    var answer = event.target.getAttribute("id");
+    
+    if (answer == "start-quiz") {
+        return;
+    } else if (answer == quizQuestions[currentQ].correctAnswer) {
+        resultsText.textContent = "Correct!";
+    } else {
+        resultsText.textContent = "Incorrect - time left reduced by 10 seconds";
+        //timeLeft = timeLeft - 10;
+    }
+
+}
+
 startQuizBtn.addEventListener('click', startQuiz);
+quizButtonsEl.addEventListener('click', checkAnswer);
 quizButtonsEl.addEventListener('click', switchQuestion);

@@ -32,3 +32,8 @@ main div {
     background-color: lavender;
     color: black;
 }
+
+.instant-result {
+    font-size: 22px;
+    color: gray;
+}
