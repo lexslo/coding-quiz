@@ -1,0 +1,16 @@
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+header a {
+    text-decoration: none;
+}
+
+header p {
+    margin: 0;
+}
+
+main div {
+    text-align: center;
+}
