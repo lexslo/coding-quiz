@@ -1,5 +1,6 @@
 var startQuizBtn = document.getElementById("start-quiz"); // target start quiz button
 var quizContentEl =  document.getElementById("quiz-content");
+var initialsInputEl = document.getElementById("initials-wrapper");
 var questionText = document.getElementById("quiz-h2");
 var resultsText = document.getElementById("result");
 
@@ -165,10 +166,22 @@ var endQuiz = function () {
     initialsInput.setAttribute("name", "initials");
     initialsInput.setAttribute("placeholder", "Enter Initials");
     initialsInput.className = "initials-input";
-    quizContentEl.appendChild(initialsInput);
+    initialsInputEl.appendChild(initialsInput);
+    // create submit button for initials
+    var initialsSubmit = document.createElement("button");
+    initialsSubmit.setAttribute("type", "submit");
+    initialsSubmit.className = "quiz-btn";
+    initialsSubmit.textContent = "Submit High Score";
+    initialsInputEl.appendChild(initialsSubmit);
 
+}
+
+var submitHighScore =  function (event) {
+    var submitted = event.target.value;
+    console.log(submitted);
 }
 
 startQuizBtn.addEventListener('click', startQuiz);
 quizContentEl.addEventListener('click', checkAnswer);
 quizContentEl.addEventListener('click', switchQuestion);
+initialsInputEl.addEventListener('submit', submitHighScore);
