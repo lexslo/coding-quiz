@@ -1,5 +1,6 @@
 var startQuizBtn = document.getElementById("start-quiz"); // target start quiz button
 var quizButtonsEl =  document.getElementById("quiz-page");
+var questionText = document.getElementById("quiz-h2");
 
 // variable to set which question/answers are displayed
 var currentQ = 0;
@@ -68,7 +69,6 @@ var quizTimer = function() {
 var generateQuestions = function () {
 
     // set question text
-    var questionText = document.getElementById("quiz-h2");
     questionText.textContent = quizQuestions[currentQ].question;
 
     // create buttons and apply answer text to them
@@ -111,4 +111,23 @@ var startQuiz = function () {
 
 };
 
+var switchQuestion = function (event) {
+
+    var buttonClick = event.target;
+    // only iterate through questions array after start quiz is clicked
+    if (buttonClick.matches("#start-quiz")) {
+        return;
+    } else {
+        currentQ++;
+    }
+
+    questionText.textContent = quizQuestions[currentQ].question;
+    document.getElementById("answer-a").textContent = quizQuestions[currentQ].answers.a;
+    document.getElementById("answer-b").textContent = quizQuestions[currentQ].answers.b;
+    document.getElementById("answer-c").textContent = quizQuestions[currentQ].answers.c;
+    document.getElementById("answer-d").textContent = quizQuestions[currentQ].answers.d;
+
+};
+
 startQuizBtn.addEventListener('click', startQuiz);
+quizButtonsEl.addEventListener('click', switchQuestion);
