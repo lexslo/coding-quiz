@@ -69,7 +69,7 @@ var quizTimer = function() {
         }
     }, 1000);
 
-    return timeLeft;
+    //return timeLeft;
 
 };
 
@@ -177,8 +177,10 @@ var endQuiz = function () {
 }
 
 var submitHighScore =  function (event) {
-    var submitted = event.target.value;
-    console.log(submitted);
+    event.preventDefault();
+
+    var initialsInput = document.querySelector("input[name='initials']").value;
+    console.log(initialsInput);
 }
 
 startQuizBtn.addEventListener('click', startQuiz);
