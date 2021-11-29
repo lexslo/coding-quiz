@@ -47,9 +47,6 @@ var quizContentEl =  document.getElementById("quiz-content");
 var initialsInputEl = document.getElementById("initials-wrapper");
 var questionText = document.getElementById("quiz-h2");
 var resultsText = document.getElementById("result");
-// elements from highscores.html
-var highScoreEl = document.getElementById("high-score-initials");
-var scoreIdCounter = 0;
 
 // variables to hold time left and target HTML display
 var timeLeft = 75;
@@ -57,9 +54,6 @@ var timeLeftDisplay = document.getElementById("quiz-timer");
 
 // variable to set which question/answers are displayed
 var currentQ = 0;
-
-// empty array to hold initials entered after quiz in highscores page
-var initialsArr = [];
 
 // assign a number to lastQuestion based on length of quizQuestions object
 var lastQuestion = quizQuestions.length - 1;
@@ -188,46 +182,26 @@ var endQuiz = function () {
 }
 
 var submitHighScore =  function (event) {
+
     event.preventDefault();
 
     var initialsInput = document.querySelector("input[name='initials']").value;
-    var currentScore = timeLeft;
-    console.log(initialsInput);
-    console.log(currentScore);
+    //console.log(initialsInput);
 
     // check that initials were entered
     if (!initialsInput) {
         alert("Please enter your initials");
         return false;
     } else {
-         // save initials to array to go to storage
-        initialsArr.push(initialsInput);
+         // save initials to object for storage
+        var initialsObj = {
+            initials: initialsInput,
+            score: timeLeft
+        }
         // save intials to local storage
-        localStorage.setItem("highscore", JSON.stringify(initialsArr));
-
-        //createScoreEl(initialsInput);    
+        localStorage.setItem("highscore", JSON.stringify(initialsObj));  
     }
 
-}
-
-var createScoreEl = function () {
-
-    var listItemEl = document.createElement("li");
-    listItemEl.className = "score-initials";
-    listItemEl.setAttribute("data-score-id", scoreIdCounter);
-    listItemEl.textContent = "Test";
-    highScoreEl.appendChild(listItemEl);
-
-    //increment score id by one after entry
-    scoreIdCounter++;
-}
-
-var loadScores = function() {
-    var savedScores = localStorage.getItem("highscore");
-    // if there are no tasks, set tasks to an empty array and return out of the function
-    if (!savedScores) {
-      return false;
-    }
 }
 
 startQuizBtn.addEventListener('click', startQuiz);
