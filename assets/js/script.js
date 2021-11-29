@@ -1,22 +1,3 @@
-var startQuizBtn = document.getElementById("start-quiz"); // target start quiz button
-var quizContentEl =  document.getElementById("quiz-content");
-var initialsInputEl = document.getElementById("initials-wrapper");
-var questionText = document.getElementById("quiz-h2");
-var resultsText = document.getElementById("result");
-// elements from highscores.html
-var highScoreEl = document.getElementById("high-score-initials");
-var scoreIdCounter = 0;
-
-// variables to hold time left and target HTML display
-var timeLeft = 75;
-var timeLeftDisplay = document.getElementById("quiz-timer");
-
-// variable to set which question/answers are displayed
-var currentQ = 0;
-
-// empty array to hold initials entered after quiz in highscores page
-var initialsArr = [];
-
 // create array of objects to store questions, question answers, and correct answers
 const quizQuestions = [
     {
@@ -61,14 +42,35 @@ const quizQuestions = [
     }
 ];
 
+var startQuizBtn = document.getElementById("start-quiz"); // target start quiz button
+var quizContentEl =  document.getElementById("quiz-content");
+var initialsInputEl = document.getElementById("initials-wrapper");
+var questionText = document.getElementById("quiz-h2");
+var resultsText = document.getElementById("result");
+// elements from highscores.html
+var highScoreEl = document.getElementById("high-score-initials");
+var scoreIdCounter = 0;
+
+// variables to hold time left and target HTML display
+var timeLeft = 75;
+var timeLeftDisplay = document.getElementById("quiz-timer");
+
+// variable to set which question/answers are displayed
+var currentQ = 0;
+
+// empty array to hold initials entered after quiz in highscores page
+var initialsArr = [];
+
+// assign a number to lastQuestion based on length of quizQuestions object
+var lastQuestion = quizQuestions.length - 1;
+
 var quizTimer = function() {
 
     timeLeftDisplay.textContent = timeLeft;
 
-    // count down from 75 seconds and update timer display, stop at 0
-    setInterval ( function() {
-        if (timeLeft === 0) {
-            clearInterval(quizTimer);
+    setInterval ( function () {
+        if (timeLeft == 0) {
+            stopQuizTimer;
         } else {
             timeLeft--;
             timeLeftDisplay.textContent = timeLeft;
@@ -76,6 +78,12 @@ var quizTimer = function() {
     }, 1000);
 
 };
+
+function stopQuizTimer () {
+
+    clearInterval(quizTimer);
+
+}
 
 var generateQuestions = function () {
 
@@ -125,7 +133,6 @@ var startQuiz = function () {
 var switchQuestion = function (event) {
 
     var buttonClick = event.target;
-    var lastQuestion = quizQuestions.length - 1;
     // only iterate through questions array after start quiz is clicked
     if (currentQ === lastQuestion) {
         endQuiz();
@@ -155,7 +162,7 @@ var checkAnswer = function (event) {
 var endQuiz = function () {
 
     // stop the timer when the quiz has ended
-    clearInterval(quizTimer);
+    stopQuizTimer();
     // change text at top when quiz ends
     questionText.textContent = "You have completed the quiz.";
     resultsText.textContent = "";
@@ -184,7 +191,9 @@ var submitHighScore =  function (event) {
     event.preventDefault();
 
     var initialsInput = document.querySelector("input[name='initials']").value;
+    var currentScore = timeLeft;
     console.log(initialsInput);
+    console.log(currentScore);
 
     // check that initials were entered
     if (!initialsInput) {
