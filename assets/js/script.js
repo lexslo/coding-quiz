@@ -58,27 +58,6 @@ var currentQ = 0;
 // assign a number to lastQuestion based on length of quizQuestions object
 var lastQuestion = quizQuestions.length - 1;
 
-var quizTimer = function() {
-
-    timeLeftDisplay.textContent = timeLeft;
-
-    setInterval ( function () {
-        if (timeLeft == 0) {
-            stopQuizTimer;
-        } else {
-            timeLeft--;
-            timeLeftDisplay.textContent = timeLeft;
-        }
-    }, 1000);
-
-};
-
-function stopQuizTimer () {
-
-    clearInterval(quizTimer);
-
-}
-
 var generateQuestions = function () {
 
     // set question text
@@ -119,7 +98,21 @@ var startQuiz = function () {
     // remove start quiz button from view
     startQuizBtn.style.display = "none";
 
-    quizTimer();
+    timeLeftDisplay.textContent = timeLeft;
+
+    var quizTimer = setInterval(function() {
+        
+        timeLeft--;
+        timeLeftDisplay.textContent = timeLeft;
+    
+        if (timeLeft <= 0) {
+            clearInterval(quizTimer);
+        } else if (currentQ < lastQuestion) {
+            clearInterval(quizTimer);
+            }
+
+    }, 1000);
+
     generateQuestions();
 
 };
@@ -155,8 +148,6 @@ var checkAnswer = function (event) {
 
 var endQuiz = function () {
 
-    // stop the timer when the quiz has ended
-    stopQuizTimer();
     // change text at top when quiz ends
     questionText.textContent = "You have completed the quiz.";
     resultsText.textContent = "";
