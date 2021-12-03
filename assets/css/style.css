@@ -1,10 +1,22 @@
+* {
+    margin: 0;
+}
+
 header {
     display: flex;
     justify-content: space-between;
+    background-color: lavender;
+    padding: 20px;
 }
 
 header a {
     text-decoration: none;
+    color: black;
+}
+
+header a:hover {
+    background-color: #4f1ea8;
+    color: white;
 }
 
 header p {
@@ -15,6 +27,7 @@ main {
     width: 70%;
     margin: 0 auto;
     text-align: center;
+    padding: 50px;
 }
 
 .quiz-heading {
