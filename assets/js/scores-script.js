@@ -1,5 +1,6 @@
 var scoreIdCounter = 0;
 var highScoreEl = document.getElementById("scores-container");
+var clearScoresBtn = document.getElementById("clear-scores");
 
 // load scores from local storage and write to page
 function loadScores() {
@@ -21,6 +22,7 @@ function loadScores() {
     for (var i = 0; i < savedScores.length; i++) {
         console.log(savedScores[i].initials + ": " + savedScores[i].score);
         var scoreContainerEl = document.createElement("div");
+        scoreContainerEl.className = "score";
         var newHighScore = document.createElement("p");
         newHighScore.textContent = savedScores[i].initials + ": " + savedScores[i].score;
         scoreContainerEl.appendChild(newHighScore);
@@ -29,4 +31,10 @@ function loadScores() {
 
 }
 
+function clearStorageHandler () {
+    localStorage.clear();
+    highScoreEl.style.display = "none";
+}
+
 loadScores();
+clearScoresBtn.addEventListener('click', clearStorageHandler);

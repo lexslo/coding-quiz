@@ -45,7 +45,7 @@ const quizQuestions = [
 // variables to target HTML elements
 var startQuizBtn = document.getElementById("start-quiz");
 var quizContentEl =  document.getElementById("quiz-content");
-var initialsInputEl = document.getElementById("initials-wrapper");
+var initialsInputEl = document.getElementById("initials-form");
 var questionText = document.getElementById("quiz-h2");
 var resultsText = document.getElementById("result");
 
@@ -163,6 +163,7 @@ var endQuiz = function () {
     var initialsInput = document.createElement("input");
     initialsInput.setAttribute("type", "text");
     initialsInput.setAttribute("name", "initials");
+    initialsInput.className = "initials-input";
     initialsInput.setAttribute("placeholder", "Enter Initials");
     initialsInput.className = "initials-input";
     initialsInputEl.appendChild(initialsInput);
@@ -185,7 +186,7 @@ var submitHighScore =  function (event) {
         alert("Please enter your initials");
         return;
     }
-     
+
     var prevScores = localStorage.getItem("highscore");
     var newScores;
 
@@ -205,6 +206,7 @@ var submitHighScore =  function (event) {
     newScores = JSON.stringify(newScores);
     localStorage.setItem("highscore",newScores);
 
+    resultsText.textContent = "Submitted score of " + timeLeft + " for " + initialsInput;
 }
 
 startQuizBtn.addEventListener('click', startQuiz);

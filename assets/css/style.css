@@ -8,7 +8,7 @@ header a {
 }
 
 header p {
-    margin: 0 auto;
+    margin: 0;
 }
 
 main {
@@ -25,7 +25,6 @@ main {
 .quiz-content {
     display: block;
     margin: 0 auto;
-    width: 50%;
 }
 
 .quiz-btn {
@@ -71,4 +70,31 @@ main {
 .instant-result {
     font-size: 22px;
     color: gray;
+}
+
+.initials-form {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 100px;
+    padding: 20px;
+}
+
+.initials-input {
+    padding: 0 25px;
+}
+
+.scores-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.score {
+    background-color: lavender;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 6px;
+    width: 50%;
 }
