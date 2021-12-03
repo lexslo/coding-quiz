@@ -42,7 +42,8 @@ const quizQuestions = [
     }
 ];
 
-var startQuizBtn = document.getElementById("start-quiz"); // target start quiz button
+// variables to target HTML elements
+var startQuizBtn = document.getElementById("start-quiz");
 var quizContentEl =  document.getElementById("quiz-content");
 var initialsInputEl = document.getElementById("initials-wrapper");
 var questionText = document.getElementById("quiz-h2");
@@ -101,13 +102,14 @@ var startQuiz = function () {
     timeLeftDisplay.textContent = timeLeft;
 
     var quizTimer = setInterval(function() {
-        
+
         timeLeft--;
         timeLeftDisplay.textContent = timeLeft;
-    
+
         if (timeLeft <= 0) {
             clearInterval(quizTimer);
-        } else if (currentQ < lastQuestion) {
+        }
+        else if (currentQ > lastQuestion) {
             clearInterval(quizTimer);
             }
 
@@ -122,6 +124,7 @@ var switchQuestion = function (event) {
     var buttonClick = event.target;
     // only iterate through questions array after start quiz is clicked
     if (currentQ === lastQuestion) {
+        currentQ++;
         endQuiz();
     } else if (buttonClick) {
         currentQ++;
@@ -177,21 +180,30 @@ var submitHighScore =  function (event) {
     event.preventDefault();
 
     var initialsInput = document.querySelector("input[name='initials']").value;
-    //console.log(initialsInput);
 
-    // check that initials were entered
     if (!initialsInput) {
         alert("Please enter your initials");
-        return false;
-    } else {
-         // save initials to object for storage
-        var initialsObj = {
-            initials: initialsInput,
-            score: timeLeft
-        }
-        // save intials to local storage
-        localStorage.setItem("highscore", JSON.stringify(initialsObj));  
+        return;
     }
+     
+    var prevScores = localStorage.getItem("highscore");
+    var newScores;
+
+    if (!prevScores) {
+        newScores = [];
+    } else {
+        newScores = JSON.parse(prevScores);
+    }
+
+    var scoreObj = {
+        initials: initialsInput,
+        score: timeLeft
+    };
+
+    newScores.push(scoreObj);
+
+    newScores = JSON.stringify(newScores);
+    localStorage.setItem("highscore",newScores);
 
 }
 

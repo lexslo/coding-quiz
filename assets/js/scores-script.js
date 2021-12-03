@@ -15,12 +15,16 @@ function loadScores() {
 
     // parse string into object
     savedScores = JSON.parse(savedScores);
+    console.log(savedScores.initials);
+    console.log(savedScores.score);
 
     for (var i = 0; i < savedScores.length; i++) {
         console.log(savedScores[i].initials + ": " + savedScores[i].score);
-        var newHighScore = document.createElement("li");
+        var scoreContainerEl = document.createElement("div");
+        var newHighScore = document.createElement("p");
         newHighScore.textContent = savedScores[i].initials + ": " + savedScores[i].score;
-        highScoreEl.appendChild(newHighScore);
+        scoreContainerEl.appendChild(newHighScore);
+        highScoreEl.appendChild(scoreContainerEl);
     }
 
 }
